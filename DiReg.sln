@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiReg", "DiReg\DiReg.csproj", "{D33B3EC6-0D29-4B1C-8597-59F21D7E7C14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiRegTests", "DiRegTests\DiRegTests.csproj", "{B3CBCF63-496E-4918-BB4D-33C529809A79}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D33B3EC6-0D29-4B1C-8597-59F21D7E7C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D33B3EC6-0D29-4B1C-8597-59F21D7E7C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D33B3EC6-0D29-4B1C-8597-59F21D7E7C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D33B3EC6-0D29-4B1C-8597-59F21D7E7C14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3CBCF63-496E-4918-BB4D-33C529809A79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3CBCF63-496E-4918-BB4D-33C529809A79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3CBCF63-496E-4918-BB4D-33C529809A79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3CBCF63-496E-4918-BB4D-33C529809A79}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A231DDF-AD60-45F5-A1DC-C49E8E0D8DB6}
+	EndGlobalSection
+EndGlobal
