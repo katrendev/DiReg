@@ -1,0 +1,77 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: mcr.microsoft.com/dotnet/core/sdk:2.2.300-stretch
+    steps:
+      - checkout
+
+      - restore_cache:
+            keys:
+              - packages-{{ checksum "DiReg/DiReg.csproj" }}-{{ checksum "DiRegTests/DiRegTests.csproj" }}
+              - packages-{{ checksum "DiReg/DiReg.csproj" }}-
+              - packages-
+      - run:
+            name: Restore deps
+            command: dotnet restore --packages ./packages
+      - save_cache:
+            key: packages-{{ checksum "DiReg/DiReg.csproj" }}-{{ checksum "DiRegTests/DiRegTests.csproj" }}
+            paths:
+              - packages
+
+      - run:
+            name: Run tests
+            command: dotnet test -c Release DiRegTests/DiRegTests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat="lcov" /p:CoverletOutput=../lcov
+
+      - store_artifacts:
+            path: lcov.info
+
+  pack:
+    docker:
+      - image: mcr.microsoft.com/dotnet/core/sdk:2.2.300-stretch
+    environment:
+      NUGET_SOURCE: https://api.nuget.org/v3/index.json
+    steps:
+      - checkout
+
+      - restore_cache:
+            keys:
+              - packages-{{ checksum "DiReg/DiReg.csproj" }}-{{ checksum "DiRegTests/DiRegTests.csproj" }}
+              - packages-{{ checksum "DiReg/DiReg.csproj" }}-
+              - packages-
+      - run:
+            name: Restore deps
+            command: dotnet restore --packages ./packages
+      - save_cache:
+            key: packages-{{ checksum "DiReg/DiReg.csproj" }}-{{ checksum "DiRegTests/DiRegTests.csproj" }}
+            paths:
+              - packages
+
+      - run:
+            name: Pack DiReg NuGet
+            command:
+                dotnet pack DiReg/DiReg.csproj /p:Version=$(date +"%Y.%m.%d.%H%M") -o ../nupkg --include-symbols --include-source -c Release --no-restore --packages ./packages
+
+      - store_artifacts:
+            path: nupkg/
+            name: nupkg
+      - store_artifacts:
+            path: DiReg/bin/Release/netstandard2.0/
+            name: bin
+
+      - deploy:
+            name: NuGet
+            command: |
+                dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source $NUGET_SOURCE
+
+workflows:
+    version: 2
+    main_workflow:
+        jobs:
+          - test
+          - pack:
+                requires:
+                  - test
+                filters:
+                    branches:
+                        only: master

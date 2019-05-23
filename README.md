@@ -13,7 +13,7 @@
 ## Установка
 
 ```bash
-dotnet add package KatrenDev.DiReg
+dotnet add package Katren.DiReg
 ```
 
 ## Использование

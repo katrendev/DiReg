@@ -21,6 +21,7 @@ bld/
 [Ll]og/
 out/
 packages/
+nupkg/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -34,3 +35,4 @@ Generated\ Files/
 Descriptions.xml
 lcov.info
 global.json
+*.nupkg
