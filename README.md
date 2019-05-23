@@ -1,5 +1,7 @@
 # DiReg
 
+Результат последней сборки master ветки: [![CircleCI](https://circleci.com/gh/katrendev/DiReg/tree/master.svg?style=svg)](https://circleci.com/gh/katrendev/DiReg/tree/master)
+
 ## О проекте
 
 Репозиторий содержит маленький атрибут для .net core 2.2 приложений, позволяющий регистрировать классы в MS Dependency Injection.  
