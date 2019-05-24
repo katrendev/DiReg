@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Katren.DiReg
 {
@@ -71,13 +72,16 @@ namespace Katren.DiReg
     public static class AutoRegUtils
     {
         /// <summary>
-        /// Метод для автоматической регистрации в DI всех классов, помеченных атрибутом AutoReg
+        /// Метод для автоматической регистрации в DI всех классов, помеченных атрибутом AutoReg из указанных сборок
         /// </summary>
-        public static void AddDiRegClasses(this IServiceCollection services)
+        /// <param name="services">Коллекция сервисов, в которую будут зарегистрированны классы помеченные атрибутом AutoReg</param>
+        /// <param name="assemblies">Список сборок, из которых будут получены классы для регистрации в Dependency Injection</param>
+        public static void AddDiRegClasses(this IServiceCollection services, IEnumerable<Assembly> assemblies)
         {
             Contract.Requires(services != null);
+            Contract.Requires(assemblies != null);
 
-            IEnumerable<Type> typeList = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes());
+            IEnumerable<Type> typeList = assemblies.SelectMany(s => s.GetTypes());
             foreach (Type serviceType in typeList)
             {
                 foreach (object attrib in serviceType.GetCustomAttributes(true))
@@ -102,6 +106,16 @@ namespace Katren.DiReg
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Метод для автоматической регистрации в DI всех классов, помеченных атрибутом AutoReg в указанной сборке
+        /// </summary>
+        /// <param name="services">Коллекция сервисов, в которую будут зарегистрированны классы помеченные атрибутом AutoReg</param>
+        /// <param name="assembly">Сборка из которой будут получены классы для регистрации в Dependency Injection</param>
+        public static void AddDiRegClasses(this IServiceCollection services, Assembly assembly)
+        {
+            AddDiRegClasses(services, new [] {assembly});
         }
     }
 }

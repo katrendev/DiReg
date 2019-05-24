@@ -30,7 +30,7 @@ namespace AutoRegisterTests
         public static void TestsInit(TestContext testContext)
         {
             _services = new ServiceCollection();
-            _services.AddDiRegClasses();
+            _services.AddDiRegClasses(typeof(SingletoneService).Assembly);
             _provider = _services.BuildServiceProvider();
         }
 
