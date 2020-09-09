@@ -1,7 +1,7 @@
-using System.Diagnostics.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 
@@ -49,7 +49,7 @@ namespace Katren.DiReg
         /// </summary>
         /// <param name="interfaceType">Интерфейс для регистрации в DI</param>
         /// <param name="lifeTime">Жизненный цикл для регистрации в DI</param>
-        public DiRegAttribute(Type interfaceType, DiLifetime lifeTime)
+        public DiRegAttribute(Type interfaceType, DiLifetime lifeTime = DiLifetime.Transient)
         {
             InterfaceType = interfaceType;
             LifeTime = lifeTime;
@@ -59,7 +59,7 @@ namespace Katren.DiReg
         /// Конструктор для регистрации в DI класса без интерфейса
         /// </summary>
         /// <param name="lifeTime">Жизненный цикл для регистрации в DI</param>
-        public DiRegAttribute(DiLifetime lifeTime)
+        public DiRegAttribute(DiLifetime lifeTime = DiLifetime.Transient)
         {
             InterfaceType = null;
             LifeTime = lifeTime;
