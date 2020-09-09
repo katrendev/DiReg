@@ -31,7 +31,7 @@ namespace Katren.DiReg
     /// <summary>
     /// Атрибут для пометки на автоматическую регистрацию класса в Dependency Injection
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
     public sealed class DiRegAttribute : Attribute
     {
         /// <summary>
@@ -81,10 +81,10 @@ namespace Katren.DiReg
             Contract.Requires(services != null);
             Contract.Requires(assemblies != null);
 
-            IEnumerable<Type> typeList = assemblies.SelectMany(s => s.GetTypes());
+            IEnumerable<Type> typeList = assemblies.SelectMany(s => s.GetTypes()).Where(t => t.IsClass);
             foreach (Type serviceType in typeList)
             {
-                foreach (object attrib in serviceType.GetCustomAttributes(true))
+                foreach (object attrib in serviceType.GetCustomAttributes())
                 {
                     if (!(attrib is DiRegAttribute attr))
                         continue;
